@@ -1,4 +1,4 @@
-FROM ubuntu:20.04 as compiler
+FROM debian:buster as compiler
 
 RUN apt-get update && apt-get upgrade -y
 
@@ -10,12 +10,14 @@ RUN git clone https://github.com/festvox/flite.git
 
 WORKDIR /src/flite/
 
+RUN git checkout tags/v2.2
+
 RUN ./configure
 
 RUN make
 
 
-FROM ubuntu:20.04
+FROM python:3.8.7-buster
 
 RUN apt-get update && apt-get upgrade -y
 
@@ -23,4 +25,14 @@ WORKDIR /flite/
 
 COPY --from=compiler /src/flite/bin/flite .
 
-CMD [ "/flite/flite", "'Flite is a small fast run-time synthesis engine'", "flite.wav" ]
+WORKDIR /flite/python/
+
+COPY requirements.txt .
+
+RUN pip install -r requirements.txt
+
+COPY src/ .
+
+ENV FLASK_APP=main.py
+
+CMD [ "python", "-m", "flask", "run", "--host=0.0.0.0" ]
