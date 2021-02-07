@@ -3,7 +3,7 @@ from flask import Flask, request, send_file
 from tempfile import NamedTemporaryFile
 
 app = Flask(__name__)
-flite = Command("/flite/flite").bake("-voice", "rms")
+flite = Command("/app/flite").bake("-voice", "rms")
 
 @app.route('/', methods=['POST'])
 def get_speech():
