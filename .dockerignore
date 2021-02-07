@@ -1,4 +1,4 @@
-# .gitignore for python
+# .dockerignore/.gitignore for python
 # source https://github.com/github/gitignore/blob/master/Python.gitignore
 # (license CC0 public domain waiver)
 
@@ -143,3 +143,13 @@ cython_debug/
 
 # ignore vscode related files
 .vscode/
+
+# .gitignore
+.gitignore
+
+# markdown files
+*.md
+
+# docker files
+Dockerfile
+.dockerignore
