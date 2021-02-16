@@ -29,7 +29,7 @@ COPY requirements/app.txt requirements.txt
 
 RUN pip install -r requirements.txt
 
-COPY src/ .
+COPY app/ .
 
 ENV FLASK_APP=main.py
 
