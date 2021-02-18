@@ -16,10 +16,14 @@ RUN ./configure
 
 RUN make
 
+RUN strip -s bin/flite
+
 
 FROM python:3.8.7-buster
 
 RUN apt-get update && apt-get upgrade -y
+
+RUN apt-get install -y ffmpeg
 
 WORKDIR /app/
 
