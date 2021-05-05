@@ -3,12 +3,12 @@ from flask import Flask, request, send_file
 from tempfile import NamedTemporaryFile
 
 app = Flask(__name__)
-flite = Command("/app/flite").bake("-voice", "rms")
+flite = Command("/app/flite").bake("-voice", "rms").bake("-t")
 ffmpeg = Command("ffmpeg").bake("-y")
 SUFFIX = ".ogg"
 TEMP_DIR = "/tmp"
 
-def synthesise_speech(text: str, tempfile):
+def synthesise_speech(text: str, tempfile: str):
   with NamedTemporaryFile(suffix=SUFFIX, dir=TEMP_DIR) as temp_intermediate:
     tempfile_intermediate = temp_intermediate.name
     flite(text, tempfile_intermediate)
