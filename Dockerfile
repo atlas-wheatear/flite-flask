@@ -16,22 +16,24 @@ RUN ./configure
 
 RUN make
 
+RUN strip -s bin/flite
+
 
 FROM python:3.8.7-buster
 
 RUN apt-get update && apt-get upgrade -y
 
-WORKDIR /flite/
+RUN apt-get install -y ffmpeg
+
+WORKDIR /app/
 
 COPY --from=compiler /src/flite/bin/flite .
 
-WORKDIR /flite/python/
-
-COPY requirements.txt .
+COPY requirements/app.txt requirements.txt
 
 RUN pip install -r requirements.txt
 
-COPY src/ .
+COPY app/ .
 
 ENV FLASK_APP=main.py
 
